@@ -81,9 +81,6 @@ class Handler
 
     private function actionCheckApiKeys(array $params): array
     {
-        // Read directly from DB to avoid stale Magento config cache.
-        // The CDN widget may call checkApiKeys before or independently of saveApiKeys,
-        // so cached values could belong to a previous merchant session.
         $pub = $this->readConfigFromDb(PaymentConfig::XML_PATH_PUBLIC_KEY);
         $sec = $this->readConfigFromDb(PaymentConfig::XML_PATH_PRIVATE_KEY);
 
@@ -91,12 +88,16 @@ class Handler
             return $this->error('API keys not configured.');
         }
 
-        $client = $this->buildClient($pub, $sec);
-        $raw    = $client->request('POST', '/check/accesstoken', [
-            'accesstoken' => $params['iapi_accessToken'] ?? '',
-        ]);
+        try {
+            $client = $this->buildClient($pub, $sec);
+            $raw    = $client->request('POST', '/check/accesstoken', [
+                'accesstoken' => $params['iapi_accessToken'] ?? '',
+            ]);
 
-        return $client->decodeResponse($raw);
+            return $client->decodeResponse($raw);
+        } catch (\Throwable $e) {
+            return $this->error('Access token check failed: ' . $e->getMessage());
+        }
     }
 
     private function actionSetInstallmentOptions(array $params): array
@@ -164,10 +165,14 @@ class Handler
             return $this->error('API keys not configured.');
         }
 
-        $client = $this->buildClient($pub, $sec);
-        $raw    = $client->request('POST', '/merchant/info', []);
+        try {
+            $client = $this->buildClient($pub, $sec);
+            $raw    = $client->request('POST', '/merchant/info', []);
 
-        return $client->decodeResponse($raw);
+            return $client->decodeResponse($raw);
+        } catch (\Throwable $e) {
+            return $this->error('Merchant info request failed: ' . $e->getMessage());
+        }
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────
