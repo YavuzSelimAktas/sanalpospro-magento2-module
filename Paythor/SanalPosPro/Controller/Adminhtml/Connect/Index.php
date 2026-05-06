@@ -23,7 +23,7 @@ class Index extends Action
     public function execute()
     {
         $page = $this->pageFactory->create();
-        $page->getConfig()->getTitle()->prepend(__('Paythor – Connect Your Account'));
+        $page->getConfig()->getTitle()->prepend(__('SanalPosPro – Connect Your Account'));
 
         return $page;
     }
