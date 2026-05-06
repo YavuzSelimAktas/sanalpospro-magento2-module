@@ -10,7 +10,7 @@
                    showInDefault="1"
                    showInWebsite="1"
                    showInStore="1">
-                <label>Paythor SanalPos Pro</label>
+                <label>SanalPos Pro</label>
                 <comment><![CDATA[Custom hybrid iframe payment integration. Webhook URL: <code>{base_url}paythor/webhook/notify</code>]]></comment>
                 <fieldset_css>complex paythor-sanalpospro-section</fieldset_css>
 
@@ -33,29 +33,6 @@
                     <comment><![CDATA[Auto-configured as <strong>105</strong> (Magento SanalPOS PRO). Confirmed automatically during account connection.]]></comment>
                     <config_path>payment/paythor_sanalpospro/app_id</config_path>
                     <validate>validate-digits</validate>
-                </field>
-
-                <field id="api_key" translate="label comment" type="text" sortOrder="23"
-                       showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>API Key</label>
-                    <comment><![CDATA[Public API key provided by Paythor. Assigned automatically during account connection, or enter manually.]]></comment>
-                    <config_path>payment/paythor_sanalpospro/api_key</config_path>
-                </field>
-
-                <field id="api_secret" translate="label comment" type="obscure" sortOrder="24"
-                       showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>API Secret</label>
-                    <comment><![CDATA[Secret API key — stored encrypted. Assigned automatically during account connection, or enter manually.]]></comment>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                    <config_path>payment/paythor_sanalpospro/api_secret</config_path>
-                </field>
-
-                <field id="webhook_secret" translate="label comment" type="obscure" sortOrder="25"
-                       showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Webhook Secret</label>
-                    <comment><![CDATA[Used to verify webhook signature integrity — stored encrypted.]]></comment>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                    <config_path>payment/paythor_sanalpospro/webhook_secret</config_path>
                 </field>
 
                 <field id="paythor_connect_link" translate="label comment" type="label" sortOrder="26"
