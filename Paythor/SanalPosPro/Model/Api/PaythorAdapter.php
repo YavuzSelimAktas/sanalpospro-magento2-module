@@ -455,7 +455,7 @@ class PaythorAdapter
      *
      * @return bool true when Paythor acknowledged the capture
      */
-    public function capturePayment(string $processToken, float $amount, string $currency, int $storeId = 0): bool
+    public function capturePayment(string $processToken, float $amount, string $currency, int $storeId = 0, string $family = 'creditcard'): bool
     {
         if ($processToken === '') {
             return false;
@@ -468,6 +468,7 @@ class PaythorAdapter
                 'capture' => [
                     'amount'   => (int)round($amount * 100),
                     'currency' => $currency,
+                    'family'   => $family,
                 ],
             ]);
 
@@ -840,7 +841,8 @@ class PaythorAdapter
         $captureModel = new \Eticsoft\PaythorClient\Models\Payment\Capture(
             (int) round($amount * 100),
             $currency,
-            []
+            [],
+            'creditcard'
         );
 
         $result = $client->payment()->capture($transactionId, $captureModel);

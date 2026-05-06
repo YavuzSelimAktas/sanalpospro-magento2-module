@@ -42,7 +42,17 @@ class Index implements HttpPostActionInterface, CsrfAwareActionInterface
         $this->response->setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS', true);
         $this->response->setHeader('Access-Control-Allow-Headers', 'Content-Type', true);
 
-        $data = $this->handler->run($this->request);
+        try {
+            $data = $this->handler->run($this->request);
+        } catch (\Throwable $e) {
+            $data = [
+                'status'  => 'error',
+                'message' => 'Internal server error: ' . $e->getMessage(),
+                'details' => [],
+                'meta'    => [],
+            ];
+        }
+
         return $this->jsonFactory->create()->setData($data);
     }
 
