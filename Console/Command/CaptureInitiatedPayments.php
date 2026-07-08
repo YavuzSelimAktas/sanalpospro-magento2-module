@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Usage:
  *   php bin/magento paythor:capture-initiated
  *   php bin/magento paythor:capture-initiated --dry-run
- *   php bin/magento paythor:capture-initiated --order-id=000000030
+ *   php bin/magento paythor:capture-initiated --order-id=000000107
  */
 class CaptureInitiatedPayments extends Command
 {
